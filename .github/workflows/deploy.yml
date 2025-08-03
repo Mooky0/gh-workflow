@@ -12,15 +12,15 @@ jobs:
       - name: Build static files
         id: build
         run: |
-          # <Not provided for brevity>
-          # At a minimum this step should build the static files of your site
-          # <Not provided for brevity>
+          run: |
+          mkdir output
+          cat index.html > output/index.html
 
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          path: /index.html # Path to the static files to upload
+          path: output # Path to the static files to upload
 
   # Deployment job
   deploy:
@@ -31,5 +31,5 @@ jobs:
     needs: build
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
+        id: deploy_pages
         uses: actions/deploy-pages@v4
