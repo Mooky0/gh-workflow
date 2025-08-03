@@ -4,31 +4,30 @@ on:
       - 'index.html'
 
 jobs:
-  # Build job
   build:
-    # Specify runner +  build & upload the static files as an artifact
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Build static files
         id: build
         run: |
-          run: |
           mkdir output
           cat index.html > output/index.html
 
       - name: Upload static files as artifact
         id: deployment
-        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: output # Path to the static files to upload
+          path: output
 
-  # Deployment job
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy_pages.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deploy_pages
