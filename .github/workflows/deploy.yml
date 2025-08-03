@@ -3,6 +3,11 @@ on:
     paths:
       - 'index.html'
 
+permissions:
+  id-token: write
+  pages: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
